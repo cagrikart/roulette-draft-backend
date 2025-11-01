@@ -4,7 +4,7 @@ spring:
   
   data:
     mongodb:
-      uri: mongodb://localhost:27017/roulette-draft
+      uri: mongodb+srv://cagri:676401Ck.@cluster0.ie1d7qp.mongodb.net/?appName=Cluster0
       database: roulette-draft
       auto-index-creation: true
 
