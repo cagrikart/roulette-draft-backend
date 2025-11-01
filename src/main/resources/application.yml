@@ -1,5 +1,7 @@
 SPRING_DATA_MONGODB_URI : mongodb+srv://cagri:676401Ck@cluster0.ie1d7qp.mongodb.net/roulette?retryWrites=true&w=majority
 
+JAVA_TOOL_OPTIONS: -Dhttps.protocols=TLSv1.2,TLSv1.3
+
 spring:
   application:
     name: roulette-draft-backend
