@@ -1,6 +1,6 @@
-SPRING_DATA_MONGODB_URI : mongodb+srv://cagri:676401Ck@cluster0.ie1d7qp.mongodb.net/roulette?retryWrites=true&w=majority
+SPRING_DATA_MONGODB_URI : mongodb+srv://cagri:676401Ck@cluster0.ie1d7qp.mongodb.net/roulette?retryWrites=true&w=majority&tls=true
 
-JAVA_TOOL_OPTIONS: -Dhttps.protocols=TLSv1.2,TLSv1.3
+JAVA_TOOL_OPTIONS: -Dhttps.protocols=TLSv1.2,TLSv1.3 -Djava.net.preferIPv4Stack=true
 
 spring:
   application:
@@ -9,7 +9,6 @@ spring:
   data:
     mongodb:
       uri: ${SPRING_DATA_MONGODB_URI}
-      database: roulette-draft
       auto-index-creation: true
 
   websocket:
