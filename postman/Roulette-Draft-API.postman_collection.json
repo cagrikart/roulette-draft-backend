@@ -1,0 +1,409 @@
+{
+	"info": {
+		"_postman_id": "roulette-draft-api",
+		"name": "Roulette Draft API",
+		"description": "Roulette Draft Backend API Collection - Updated for Player, Team, and Room endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Players",
+			"item": [
+				{
+					"name": "Get All Players",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/players",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"players"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"description": "Page number (optional)",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "20",
+									"description": "Page size (optional)",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get all players from database"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Player by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/players/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"players",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "690137b48f9ec9ff61510797",
+									"description": "Player ID (ObjectId)"
+								}
+							]
+						},
+						"description": "Get player by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Players",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/players/search?team=Alanyaspor&position=Left-Back&nationality=Türkiye",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"players",
+								"search"
+							],
+							"query": [
+								{
+									"key": "team",
+									"value": "Alanyaspor",
+									"description": "Filter by team name",
+									"disabled": true
+								},
+								{
+									"key": "position",
+									"value": "Left-Back",
+									"description": "Filter by position",
+									"disabled": true
+								},
+								{
+									"key": "nationality",
+									"value": "Türkiye",
+									"description": "Filter by nationality",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Search players by various criteria"
+					},
+					"response": []
+				}
+			],
+			"description": "Player endpoints"
+		},
+		{
+			"name": "Teams",
+			"item": [
+				{
+					"name": "Get All Teams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/teams",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"teams"
+							],
+							"query": [
+								{
+									"key": "league",
+									"value": "Turkish Super League",
+									"description": "Filter by league name (optional)",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get all unique teams from database. Optionally filter by league (e.g., 'Turkish Super League')"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Teams by League",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/teams?league=Turkish Super League",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"teams"
+							],
+							"query": [
+								{
+									"key": "league",
+									"value": "Turkish Super League",
+									"description": "League name to filter teams"
+								}
+							]
+						},
+						"description": "Get teams filtered by league name"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Players by Team Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/teams/:teamName/players",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								":teamName",
+								"players"
+							],
+							"variable": [
+								{
+									"key": "teamName",
+									"value": "Alanyaspor",
+									"description": "Team name"
+								}
+							]
+						},
+						"description": "Get players by team name"
+					},
+					"response": []
+				}
+			],
+			"description": "Team endpoints"
+		},
+		{
+			"name": "Rooms",
+			"item": [
+				{
+					"name": "Create Room",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.environment.set('roomId', response.id);",
+									"    console.log('Room created:', response.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Draft Room\",\n    \"formation\": \"4-3-3\",\n    \"maxParticipants\": 5\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/rooms",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"rooms"
+							]
+						},
+						"description": "Create a new room (maxParticipants: 2-5)"
+					},
+					"response": []
+				},
+				{
+					"name": "Join Room",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    console.log('Joined room:', response.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"{{userId}}\",\n    \"displayName\": \"{{displayName}}\",\n    \"rosterSizeLimit\": 11\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/rooms/:roomId/join",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"rooms",
+								":roomId",
+								"join"
+							],
+							"variable": [
+								{
+									"key": "roomId",
+									"value": "{{roomId}}",
+									"description": "Room ID"
+								}
+							]
+						},
+						"description": "Join a room"
+					},
+					"response": []
+				},
+				{
+					"name": "Start Draft",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/rooms/:roomId/start",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"rooms",
+								":roomId",
+								"start"
+							],
+							"variable": [
+								{
+									"key": "roomId",
+									"value": "{{roomId}}",
+									"description": "Room ID"
+								}
+							]
+						},
+						"description": "Start the draft (requires at least 2 participants)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Room by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/rooms/:roomId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"rooms",
+								":roomId"
+							],
+							"variable": [
+								{
+									"key": "roomId",
+									"value": "{{roomId}}",
+									"description": "Room ID"
+								}
+							]
+						},
+						"description": "Get room by ID"
+					},
+					"response": []
+				}
+			],
+			"description": "Room management endpoints (2-5 participants)"
+		},
+		{
+			"name": "Health",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actuator/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						},
+						"description": "Health check endpoint"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

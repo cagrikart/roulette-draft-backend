@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: roulette-draft-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/roulette-draft
+      SPRING_DATA_MONGODB_DATABASE: roulette-draft
+    depends_on:
+      - mongodb
+    networks:
+      - roulette-network
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:7.0
+    container_name: roulette-draft-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: roulette_draft
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - roulette-network
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
+
+networks:
+  roulette-network:
+    driver: bridge
+

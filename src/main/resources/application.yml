@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: roulette-draft-backend
+  
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/roulette-draft
+      database: roulette-draft
+      auto-index-creation: true
+
+  websocket:
+    allowed-origins: "*"
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+logging:
+  level:
+    com.roulettedraft: INFO
+    org.springframework.web: INFO
+    org.springframework.data.mongodb: INFO  # DEBUG yerine INFO - MongoDB query'leri loglanmayacak
+    org.springframework.data.mongodb.core.MongoTemplate: WARN  # Sadece uyarılar loglanacak
+  pattern:
+    console: "[%d{yyyy-MM-dd HH:mm:ss}] [%thread] [%level] %logger{36} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
